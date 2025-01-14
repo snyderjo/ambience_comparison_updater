@@ -1,0 +1,236 @@
+---
+title: "Daily Ambience Comparison"
+date: "`r format(Sys.Date(),'%b %d, %Y')`"
+output: html_document
+knit: (function(input, encoding) {
+  rmarkdown::render(input,
+                    output_dir = "../output")})
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE,echo=FALSE,warning = FALSE,message=FALSE)
+knitr::opts_chunk$set(fig.dim = c(9, 7))
+
+library(plotly)
+library(dplyr)
+
+setwd(file.path("~","Documents","projects","ambience_reports","ambience_comparison"))
+amb_dataset = read.csv(file.path("intermediate_data","test.csv"))
+#sleep_dataset = fromJSON(file.path("intermediate_data","oura_sleep_2024-08-04T19-54-06.json"),flatten = T)
+
+amb_dataset$reading_dttm = as.POSIXct(amb_dataset$reading_dttm)
+amb_dataset = amb_dataset %>% arrange(reading_dttm)
+
+x_lower = as.POSIXct(paste0(format(min(amb_dataset$reading_dttm),"%Y-%m-%d")," 00:00"))
+x_upper = as.POSIXct(paste0(format(max(amb_dataset$reading_dttm),"%Y-%m-%d")," 24:00"))
+
+dateList = seq(as.Date(format(x_lower,"%Y-%m-%d")),as.Date(format(x_upper,"%Y-%m-%d")),by="1 day")
+
+```
+
+## Plots {.tabset}
+
+The graphs below below are the results the [ambience database](https://snyderjo.github.io/ambience/).  
+
+The idea is to identify any notable differences between the measurements the pi's in two different room: my bedroom, and the living room.  
+
+
+### Temperature  
+
+```{r Temperature, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~temp,color = I("red"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(title = "Temperature (C)"))
+
+fig
+```
+
+Some of you might be asking: *Does it really get above 40 (104 degrees Fahrenheit) in your bedroom???*  
+No.  The sensor is attached to a raspberry pi, which produces a good amount of heat on its own.  The above data measures temperature with a consistent bias.
+
+### Humidity  
+
+```{r humidity, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~humidity,color = I("orange"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(title = "Humidity (%)")
+    )
+
+fig
+```
+
+### Pressure  
+
+```{r pressure, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~pressure,color = I("green"),linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range = c(x_lower, x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(title = "Pressure (mbar)")
+    )
+
+fig
+```
+
+### Pitch  
+
+```{r pitch, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~pitch,color = I("blue"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(
+      range=c(0,360)
+      ,title = "Pitch (degrees)"
+      )
+    )
+
+fig
+```
+
+### Roll  
+
+```{r roll, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~roll,color = I("blue"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(
+      range=c(0,360)
+      ,title = "Roll (degrees)"
+      )
+    )
+
+fig
+```
+
+### yaw  
+
+```{r yaw, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~yaw,color = I("blue"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(
+      range=c(0,360)
+      ,title = "Yaw (degrees)"
+      )
+    )
+
+fig
+```
+
+### Acceleration [X]  
+
+```{r accel_x, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~accel_x,color = I("purple"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(title = "Acceleration [X] (G's)")
+    )
+
+fig
+```
+
+### Acceleration [Y]  
+
+```{r accel_y, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~accel_y,color = I("purple"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(title = "Acceleration [Y] (G's)")
+    )
+
+fig
+```
+
+
+### Acceleration [z]  
+
+```{r accel_z, echo=FALSE}
+fig = plot_ly(data = amb_dataset, x = ~reading_dttm) 
+
+fig = fig %>% add_lines(y = ~accel_z,color = I("purple"), linetype = ~room)
+fig = fig %>% layout(
+    title = NULL,
+    xaxis = list(
+      range=c(x_lower,x_upper)
+      ,title = "date-time"
+      ,rangeslider = list(type = "dateteime")
+      ),
+    yaxis = list(title = "Acceleration [Z] (G's)")
+    )
+
+fig
+```
+
+Note: This should be measuring the vertical acceleration, i.e. gravity.  
+Unless something changes, there's notable variability around the value of 1 in the living room.  The Bedroom value holds steady around .985 G's.  
+Taken at face value, it means that  
+1. Gravity effect is slightly lesser in my bedroom than in the rest of the world, and  
+2. Gravity's value occasionally jumps .6 G's in my living room.  
+I'll chalk these differences up to measurement error.  
+
+## A couple of notes:
+
+
+* What gives with the delay between the date this report is rendered vs. what is displayed below?  
+  + If the data were immediate, it would be entirely too clear when I was out of town--information I'm not keen to share.  
+* There are notable gaps in data.  Why?  
+   + Some days the [DAG](https://airflow.apache.org/docs/apache-airflow/1.10.9/concepts.html) fails for no discernible reason--I invite you to take it up with Apache.  
+   + Lacking a power outage, these tiny computers are constantly running.  They are prone to outages--I once neglected to note a pi was not recording for several weeks.
+
