@@ -4,7 +4,7 @@ date: "`r format(Sys.Date(),'%b %d, %Y')`"
 output: html_document
 knit: (function(input, encoding) {
   rmarkdown::render(input,
-                    output_dir = "../output")})
+                    output_dir = ".")})
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +16,6 @@ library(dplyr)
 
 setwd(file.path("~","Documents","projects","ambience_reports","ambience_comparison"))
 amb_dataset = read.csv(file.path("intermediate_data","test.csv"))
-#sleep_dataset = fromJSON(file.path("intermediate_data","oura_sleep_2024-08-04T19-54-06.json"),flatten = T)
 
 amb_dataset$reading_dttm = as.POSIXct(amb_dataset$reading_dttm)
 amb_dataset = amb_dataset %>% arrange(reading_dttm)
