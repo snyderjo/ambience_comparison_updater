@@ -11,11 +11,21 @@ knit: (function(input, encoding) {
 knitr::opts_chunk$set(include = TRUE,echo=FALSE,warning = FALSE,message=FALSE)
 knitr::opts_chunk$set(fig.dim = c(9, 7))
 
-library(plotly)
-library(dplyr)
+require(plotly)
+require(dplyr)
+require(DBI)
+require(RPostgres)
 
-setwd(file.path("~","Documents","projects","ambience_reports","ambience_comparison"))
-amb_dataset = read.csv(file.path("intermediate_data","test.csv"))
+source("creds.r")
+
+queryText = paste(readLines(file.path("..","queries","ambience_pull.sql")),collapse = " ")
+
+con <- dbConnect(RPostgres::Postgres(),dbname=AMB_CREDS$dbname,host=AMB_CREDS$host,port=AMB_CREDS$port,user=AMB_CREDS$user,password=AMB_CREDS$password,timezone=NULL)
+
+res <- dbSendQuery(con,queryText)
+amb_dataset <- dbFetch(res)
+dbDisconnect(con)
+rm(AMB_CREDS)
 
 amb_dataset$reading_dttm = as.POSIXct(amb_dataset$reading_dttm)
 amb_dataset = amb_dataset %>% arrange(reading_dttm)
