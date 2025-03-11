@@ -31,7 +31,7 @@ with DAG(
 
     git_push = BashOperator(
         task_id = "update_githubIO"
-        ,bash_command = "cd {{ var.val.githubIO_dir }}; git add index.md dailyReport.html images; git commit -m 'updates results on {macros.ds}"
+        ,bash_command = "cd {{ var.val.githubIO_dir }}; git add index.md dailyReport.html images; git commit -m 'updates results on {{ macros.ds }}'; git push origin master"
     )
 
 
