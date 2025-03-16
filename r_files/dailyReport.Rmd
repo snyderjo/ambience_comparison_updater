@@ -11,12 +11,13 @@ knit: (function(input, encoding) {
 knitr::opts_chunk$set(include = TRUE,echo=FALSE,warning = FALSE,message=FALSE)
 knitr::opts_chunk$set(fig.dim = c(9, 7))
 
+
 require(plotly)
 require(dplyr)
 require(DBI)
 require(RPostgres)
 
-source("creds.r")
+source("creds.R")
 
 queryText = paste(readLines(file.path("..","queries","ambience_pull.sql")),collapse = " ")
 
