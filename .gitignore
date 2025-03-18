@@ -2,3 +2,4 @@
 .DS_Store
 rmarkdown/creds.R
 .Rproj.user
+r_files/creds.R
