@@ -26,12 +26,12 @@ with DAG(
 
     mv_results = BashOperator(
         task_id='mv_to_github'
-        ,bash_command = "cd {{ var.val.r_dir_ambComp }}; mv -f index.md dailyReport.html {{ var.val.githubIO_dir }}; mv -f images/*.png {{ var.val.githubIO_dir }}images/"
+        ,bash_command = "cd {{ var.val.r_dir_ambComp }}; mv -f index.md dailyReport.html {{ var.val.githubIO_dir }}ambience_comparison/; mv -f images/*.png {{ var.val.githubIO_dir }}ambience_comparison/images/"
     )
 
     git_push = BashOperator(
         task_id = "update_githubIO"
-        ,bash_command = "cd {{ var.val.githubIO_dir }}; git add index.md dailyReport.html images/*.png; git commit -m 'updates results on {{ macros.ds }}'; git push origin master"
+        ,bash_command = "cd {{ var.val.githubIO_dir }}ambience_comparison/; git add index.md dailyReport.html images/*.png; git commit -m 'updates results on {{ macros.ds }}'; git push origin master"
     )
 
     report_render >> mv_results >> git_push 
