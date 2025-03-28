@@ -15,7 +15,6 @@ knit: (function(input, encoding) {
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(include = TRUE,echo=FALSE,warning = FALSE,message=FALSE)
-#knitr::opts_knit$set(base.dir = "/Users/johnsnyder/Documents/projects/ambience_reports/ambience_comparison/output/")
 knitr::opts_chunk$set(fig.path = "images/")
 
 require(ggplot2)
