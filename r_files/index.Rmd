@@ -46,7 +46,7 @@ dateList = seq(as.Date(format(x_lower,"%Y-%m-%d")),as.Date(format(x_upper,"%Y-%m
 
 The graphs below below are the results the [ambience database](https://snyderjo.github.io/ambience/).  
 
-The idea is to identify any notable differences between the measurements the pi's in two different room: my bedroom, and the living room.  I've limited the results to those metrics which are of interest.  For a comprehensive and more interactive version of this report [click here](dailyReport.html)
+The idea is to identify any notable differences between the measurements the pi's in two different room: my office, and the living room.  I've limited the results to those metrics which are of interest.  For a comprehensive and more interactive version of this report [click here](dailyReport.html)
 
 ### Temperature  
 
