@@ -14,8 +14,8 @@ default_args = {
 with DAG(
     dag_id = 'daily_ambience_comparison'
     ,description = 'this renders predefined rmarkdown reports daily, and pushes them to a github.io project'
-    ,start_date=datetime(2025,3,10,tzinfo=pendulum.timezone("America/Denver"))
-    ,catchup = True
+    ,start_date=datetime(2026,2,7,tzinfo=pendulum.timezone("America/Los_Angeles"))
+    ,catchup = False
     ,schedule_interval = '00 7 * * *'
 ) as dag:
     
