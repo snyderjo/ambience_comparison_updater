@@ -63,7 +63,7 @@ fig = fig %>% layout(
 fig
 ```
 
-Some of you might be asking: *Does it really get above 40 (104 degrees Fahrenheit) in your bedroom???*  
+Some of you might be asking: *Does it really get above 40 (104 degrees Fahrenheit) in your house???*  
 No.  The sensor is attached to a raspberry pi, which produces a good amount of heat on its own.  The above data measures temperature with a consistent bias.
 
 ### Humidity  
@@ -231,8 +231,8 @@ fig
 Note: This should be measuring the vertical acceleration, i.e. gravity.  
 Unless something changes, there's notable variability around the value of 1 in the living room.  The Bedroom value holds steady around .985 G's.  
 Taken at face value, it means that  
-1. Gravity effect is slightly lesser in my bedroom than in the rest of the world, and  
-2. Gravity's value occasionally jumps .6 G's in my living room.  
+1. Gravity effect is slightly lesser in one room than in the rest of the world, and  
+2. Gravity's value occasionally jumps .6 G's.  
 I'll chalk these differences up to measurement error.  
 
 ## A couple of notes:

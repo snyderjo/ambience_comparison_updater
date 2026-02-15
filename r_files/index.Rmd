@@ -64,7 +64,7 @@ p = ggplot(data = amb_dataset) +
 print(p)
 ```
 
-Depending on the season, some of you might be asking: *Does it really get above 40 (104 degrees Fahrenheit) in your bedroom???*  
+Depending on the season, some of you might be asking: *Does it really get above 40 (104 degrees Fahrenheit) in your domicile???*  
 No.  The sensor is attached to a raspberry pi, which produces a good amount of heat on its own.  The above data measures temperature with a consistent bias.
 
 ### Humidity  
@@ -120,8 +120,8 @@ print(p)
 Note: This should be measuring the vertical acceleration, i.e. gravity.  
 Unless something changes, there's notable variability around the value of 1 in the living room.  The Bedroom value holds steady around .985 G's.  
 Taken at face value, it means that  
-1. Gravity's effect is slightly lesser in my bedroom than in the rest of the world, and  
-2. Gravity's value occasionally jumps .06 G's in my living room.  
+1. Gravity's effect is slightly lesser in one room than in the rest of the world, and  
+2. Gravity's value occasionally jumps .06 G's.  
 
 I'll chalk these differences up to measurement error.  
 
@@ -133,6 +133,7 @@ I'll chalk these differences up to measurement error.
   + If the data were immediate, it would be entirely too clear when I was out of town--information I'm not keen to share.  
 * There are notable gaps in data.  Why?    
    + Some days the [DAG](https://airflow.apache.org/docs/apache-airflow/1.10.9/concepts.html) fails for no discernible reason--you might take it up with Apache.  
+   + Sometimes, the pi records a non-UTF character, and data ingestion fails.
    + Sometimes, the device itself simply fails to record. ¯\\\\\_(ツ)\_/¯  
 
 
